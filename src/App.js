@@ -125,9 +125,9 @@ class App extends Component {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       this.setState({
-        input: URL.createObjectURL(img) 
+        input: URL.createObjectURL(img)
       });
-      this.onButtonSubmit();
+      return this.onButtonSubmit();
     }
   }
 
