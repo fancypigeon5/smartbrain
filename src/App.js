@@ -121,6 +121,16 @@ class App extends Component {
     }
   }
 
+  onImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      this.setState({
+        input: URL.createObjectURL(img) 
+      });
+      this.onButtonSubmit();
+    }
+  }
+
   render() {
     const { isSignedIn, imageUrl, route, boxes } = this.state;
     return (
@@ -133,6 +143,7 @@ class App extends Component {
               <Logo />
               <Rank name= {this.state.user.name} entries={this.state.user.entries}/>
               <ImageLinkForm 
+                onImageChange={this.onImageChange}
                 onEnterPress={this.onEnterPress}
                 onInputChange={this.onInputChange} 
                 onButtonSubmit={this.onButtonSubmit}
