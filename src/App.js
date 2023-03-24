@@ -12,7 +12,7 @@ import './App.css';
 const initialState = {
   input: '',
   imageUrl: '',
-  box: {},
+  boxes: [],
   route: 'signin',
   isSignedIn: false,
   user: {
@@ -41,8 +41,17 @@ class App extends Component {
     })
   }
   
+  calculateBoundingBoxes = (data) => {
+    const clarifaiBoxes = data.outputs[0].data.regions;
+    const boundingBoxes = clarifaiBoxes.map((box) => 
+      this.calculateFaceLocation(box)
+    ) 
+    return boundingBoxes;
+    
+  }
+
   calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const clarifaiFace = data.region_info.bounding_box; 
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
@@ -54,9 +63,9 @@ class App extends Component {
     }
   }
 
-  displayFaceBox = (box) => {
-    console.log(box)
-    this.setState({box: box})
+  displayFaceBox = (boxes) => {
+    console.log(boxes)
+    this.setState({boxes: boxes})
   }
 
   onInputChange = (event) => {
@@ -90,7 +99,7 @@ class App extends Component {
           })
           .catch(console.log)
       }
-      this.displayFaceBox(this.calculateFaceLocation(result))
+      this.displayFaceBox(this.calculateBoundingBoxes(result))
       }
     )
     .catch(error => console.log('error', error));
@@ -107,7 +116,7 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, imageUrl, route, box } = this.state;
+    const { isSignedIn, imageUrl, route, boxes } = this.state;
     return (
       <div className="App">
         <Particle />
@@ -121,7 +130,7 @@ class App extends Component {
                 onInputChange={this.onInputChange} 
                 onButtonSubmit={this.onButtonSubmit}
               />
-              <FaceRecognition box={box} imageUrl={imageUrl} />
+              <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
             </div>
           : (
               route === 'register'
