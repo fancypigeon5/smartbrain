@@ -37,6 +37,12 @@ class Signin extends React.Component {
             })
     }
 
+    onEnterPress = (event) => {
+        if (event.keyCode === 13) {
+            return this.onSubmitSignIn();
+        }
+    }
+
     render() {
         const { onRouteChange } = this.props;
         return(
@@ -62,7 +68,8 @@ class Signin extends React.Component {
                                     className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                                     type="password" 
                                     name="password"  
-                                    id="password" 
+                                    id="password"
+                                    onKeyDown={this.onEnterPress} 
                                 />
                             </div>
                         </fieldset>
