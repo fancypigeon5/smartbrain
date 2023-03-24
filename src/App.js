@@ -115,6 +115,12 @@ class App extends Component {
     this.setState({route: route})
   }
 
+  onEnterPress = (event) => {
+    if (event.keyCode === 13) {
+        return this.onButtonSubmit();
+    }
+  }
+
   render() {
     const { isSignedIn, imageUrl, route, boxes } = this.state;
     return (
@@ -127,6 +133,7 @@ class App extends Component {
               <Logo />
               <Rank name= {this.state.user.name} entries={this.state.user.entries}/>
               <ImageLinkForm 
+                onEnterPress={this.onEnterPress}
                 onInputChange={this.onInputChange} 
                 onButtonSubmit={this.onButtonSubmit}
               />
