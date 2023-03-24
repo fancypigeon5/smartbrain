@@ -41,6 +41,12 @@ class Register extends React.Component {
             })
     }
 
+    something = (event) => {
+        if (event.key === 'enter') {
+            this.onSubmitRegister();
+        }
+    }
+
     render() {
         return(
             <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -71,6 +77,7 @@ class Register extends React.Component {
                             <div className="mv3">
                                 <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                                 <input
+                                    onKeyDown={(e) => something(e) }
                                     onChange={this.onPasswordChange} 
                                     className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                                     type="password" 
